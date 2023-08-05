@@ -1,31 +1,28 @@
-
-
+import Model from './model.js';
+import View from './view.js';
 export default class Controller {
-  constructor(model, view) {
-    this.model = model;
-    this.view = view;
-    this.view.init(this.handleCellClick.bind(this));
+  constructor(boardSize, boardContainer) {
+    this.model = new Model(boardSize);
+    this.view = new View(boardSize, this.onCellClick.bind(this), boardContainer);
+    this.view.createBoard();
   }
 
-  handleCellClick(index) {
-    if (this.model.isCellEmpty(index) && !this.model.checkWinner()) {
-      this.model.makeMove(index);
-      this.view.displayBoard(this.model.board);
-
-      const winner = this.model.checkWinner();
+  onCellClick(index) {
+    if (this.model.playMove(index)) {
+      this.view.updateCell(index, this.model.board[index]);
+      const winner = this.model.checkWin();
       if (winner) {
-        setTimeout(() => {
-          alert(winner === 'tie' ? "It's a tie!" : `${winner} wins!`);
-          this.model.resetBoard();
-          this.view.displayBoard(this.model.board);
-        }, 100);
+        this.view.showResult(winner);
+        this.resetGame();
       } else if (this.model.isBoardFull()) {
-        setTimeout(() => {
-          alert("It's a tie!");
-          this.model.resetBoard();
-          this.view.displayBoard(this.model.board);
-        }, 100);
+        this.view.showResult('draw');
+        this.resetGame();
       }
     }
+  }
+
+  resetGame() {
+    this.model = new Model(this.model.size);
+    this.view.createBoard();
   }
 }

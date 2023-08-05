@@ -1,26 +1,35 @@
-
 export default class View {
-  constructor() {
-    this.cells = document.querySelectorAll('[data-cell]');
+  constructor(boardSize, onCellClick, boardContainer) {
+    this.boardSize = boardSize;
+    this.onCellClick = onCellClick;
+    this.container = boardContainer;
   }
 
-  displayBoard(board) {
-    this.cells.forEach((cell, index) => {
-      cell.textContent = board[index];
-    });
+  createBoard() {
+    this.container.innerHTML = '';
+    this.container.style.gridTemplateColumns = `repeat(${this.boardSize}, 100px)`;
+    this.container.style.gridTemplateRows = `repeat(${this.boardSize}, 100px)`;
+
+    for (let i = 0; i < this.boardSize * this.boardSize; i++) {
+      const cell = document.createElement('div');
+      cell.classList.add('cell');
+      cell.setAttribute('data-cell', '');
+      cell.addEventListener('click', () => this.onCellClick(i));
+      this.container.appendChild(cell);
+    }
   }
 
-  bindCellClick(handler) {
-    this.cells.forEach((cell, index) => {
-      cell.addEventListener('click', () => {
-        handler(index);
-      });
-    });
+  updateCell(index, value) {
+    const cell = this.container.children[index];
+    cell.setAttribute('data-cell', value);
+    cell.textContent = value;
   }
 
-  init(handler) {
-    this.displayBoard(['', '', '', '', '', '', '', '', '']); 
-    this.bindCellClick(handler);
+  showResult(result) {
+    if (result === 'draw') {
+      alert('It\'s a draw!');
+    } else {
+      alert(`Player ${result} wins!`);
+    }
   }
 }
-  

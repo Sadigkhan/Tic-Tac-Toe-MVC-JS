@@ -1,36 +1,74 @@
-.board {
-    display: grid;
-    grid-template-columns: repeat(3, 100px);
-    grid-template-rows: repeat(3, 100px);
-    gap: 5px;
-    width: 320px;
-    margin: 50px auto;
-  }
-  
-  .cell {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    height: 100px;
-    background-color: #f0f0f0;
-    font-size: 48px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .cell:hover {
-    background-color: #e0e0e0;
-  }
-  
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
+/* Reset default styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
 
- 
-  
+/* Center the game container */
+#Game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+/* Styling for the game creator section */
+.Game-Creator {
+  text-align: center;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.Game-Creator label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.Game-Creator input {
+  width: 60px;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.Game-Creator button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.Game-Creator button:hover {
+  background-color: #45a049;
+}
+
+/* Styling for the game board */
+#Board {
+  margin-top: 30px;
+  display: grid;
+  gap: 5px;
+}
+
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  cursor: pointer;
+}
+
+.cell[data-cell="X"] {
+  color: #f44336;
+}
+
+.cell[data-cell="O"] {
+  color: #2196F3;
+}
