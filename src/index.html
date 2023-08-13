@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/style.css">
+  <title>Tic Tac Toe</title>
+</head>
+<body>
+  <section id="Game">
+    <div class="Game-Creator">
+      <label for="">What kind of combination do you want? (eg. 3x3)</label>
+      <input id="Board-Size" type="number" min="3">
+      <button id="Start-Button" type="submit">Create Game</button>
+      <div id="Board"  style="--board-size: 3;"></div>
+    </div>
+  </section>
+
+  <script src="./js/main.js" type="module"></script>
+</body>
+</html>
