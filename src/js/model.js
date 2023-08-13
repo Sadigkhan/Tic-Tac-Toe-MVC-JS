@@ -16,16 +16,26 @@ export default class Model {
 
   checkWin() {
     const winningCombinations = this.getWinningCombinations();
-    
+  
     for (const combination of winningCombinations) {
-      const [cell1, cell2, cell3] = combination;
-      if (this.board[cell1] && this.board[cell1] === this.board[cell2] && this.board[cell1] === this.board[cell3]) {
-        return this.board[cell1];
+      let sameSymbols = true;
+      const firstSymbol = this.board[combination[0]];
+  
+      for (const index of combination) {
+        if (!this.board[index] || this.board[index] !== firstSymbol) {
+          sameSymbols = false;
+          break;
+        }
+      }
+  
+      if (sameSymbols) {
+        return firstSymbol;
       }
     }
-
+  
     return null;
   }
+  
 
   isBoardFull() {
     return this.board.every(cell => cell !== null);
@@ -38,29 +48,43 @@ export default class Model {
 
   getWinningCombinations() {
     const combinations = [];
-
-    // Rows
+  
+    // Row combinations
     for (let i = 0; i < this.size; i++) {
-      for (let j = 0; j <= this.size - 3; j++) {
-        combinations.push([i * this.size + j, i * this.size + j + 1, i * this.size + j + 2]);
+      for (let j = 0; j <= this.size - this.size; j++) {
+        const rowCombination = [];
+        for (let k = 0; k < this.size; k++) {
+          rowCombination.push(i * this.size + j + k);
+        }
+        combinations.push(rowCombination);
       }
     }
-
-    // Columns
+  
+    // Column combinations
     for (let i = 0; i < this.size; i++) {
-      for (let j = 0; j <= this.size - 3; j++) {
-        combinations.push([j * this.size + i, (j + 1) * this.size + i, (j + 2) * this.size + i]);
+      for (let j = 0; j <= this.size - this.size; j++) {
+        const columnCombination = [];
+        for (let k = 0; k < this.size; k++) {
+          columnCombination.push((j + k) * this.size + i);
+        }
+        combinations.push(columnCombination);
       }
     }
-
-    // Diagonals
-    for (let i = 0; i <= this.size - 3; i++) {
-      for (let j = 0; j <= this.size - 3; j++) {
-        combinations.push([i * this.size + j, (i + 1) * this.size + j + 1, (i + 2) * this.size + j + 2]);
-        combinations.push([i * this.size + j + 2, (i + 1) * this.size + j + 1, (i + 2) * this.size + j]);
+  
+    // Diagonal combinations
+    for (let i = 0; i <= this.size - this.size; i++) {
+      for (let j = 0; j <= this.size - this.size; j++) {
+        const mainDiagonalCombination = [];
+        const antiDiagonalCombination = [];
+        for (let k = 0; k < this.size; k++) {
+          mainDiagonalCombination.push((i + k) * this.size + j + k);
+          antiDiagonalCombination.push((i + k) * this.size + (this.size - j - 1 - k));
+        }
+        combinations.push(mainDiagonalCombination);
+        combinations.push(antiDiagonalCombination);
       }
     }
-
+  
     return combinations;
   }
 }
