@@ -3,18 +3,29 @@ export default class View {
     this.boardSize = boardSize;
     this.onCellClick = onCellClick;
     this.container = boardContainer;
+    // console.log(this.container);
+    this.bindCellClickEvents();
   }
 
-  createBoard() {
+  bindCellClickEvents() {
     this.container.innerHTML = '';
-    this.container.style.gridTemplateColumns = `repeat(${this.boardSize}, 100px)`;
-    this.container.style.gridTemplateRows = `repeat(${this.boardSize}, 100px)`;
-
+  
     for (let i = 0; i < this.boardSize * this.boardSize; i++) {
       const cell = document.createElement('div');
       cell.classList.add('cell');
       cell.setAttribute('data-cell', '');
       cell.addEventListener('click', () => this.onCellClick(i));
+      this.container.appendChild(cell);
+    }
+  }
+  
+
+  createBoard() {
+    this.container.innerHTML = '';
+    for (let i = 0; i < this.boardSize * this.boardSize; i++) {
+      const cell = document.createElement('div');
+      cell.classList.add('cell');
+      cell.setAttribute('data-cell', '');
       this.container.appendChild(cell);
     }
   }
